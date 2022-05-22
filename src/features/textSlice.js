@@ -36,20 +36,8 @@ export const textSlice = createSlice({
   name: "text",
   initialState,
   reducers: {
-    happyHandler: (state) => {
-      state.text[state.step].userValue = "happy";
-      if (state.step < 5) {
-        ++state.step;
-      }
-    },
-    sadHandler: (state) => {
-      state.text[state.step].userValue = "sad";
-      if (state.step < 5) {
-        ++state.step;
-      }
-    },
-    pokerHandler: (state) => {
-      state.text[state.step].userValue = "poker";
+    emotionHandler: (state, action) => {
+      state.text[state.step].userValue = action.payload;
       if (state.step < 5) {
         ++state.step;
       }
@@ -64,7 +52,6 @@ export const textSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { pokerHandler, happyHandler, sadHandler, skip, previous } =
-  textSlice.actions;
+export const { skip, previous, emotionHandler } = textSlice.actions;
 
 export default textSlice.reducer;

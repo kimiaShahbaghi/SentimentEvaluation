@@ -1,4 +1,4 @@
-.main {
+.sentiment {
   width: 100%;
   height: 83%;
   position: relative;
@@ -13,11 +13,11 @@
     }
     .question {
       font-size: smaller;
-      color: rgb(215, 215, 215);
+      color: rgb(158, 149, 149);
     }
     .answer {
       font-size: bigger;
-      color: white;
+      color: black;
     }
   }
   .rating {
@@ -39,15 +39,15 @@
       cursor: pointer;
     }
     #happy {
-      background-image: url("../assest/happy.png");
+      background-image: url("../../assest/happy.png");
       background-size: cover;
     }
     #sad {
-      background-image: url("../assest/sad.png");
+      background-image: url("../../assest/sad.png");
       background-size: cover;
     }
     #poker {
-      background-image: url("../assest/poker.png");
+      background-image: url("../../assest/poker.png");
       background-size: cover;
     }
   }
