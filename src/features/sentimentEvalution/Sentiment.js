@@ -1,16 +1,29 @@
-import React, { useSelector, useDispatch } from "react-redux";
-import { emotionHandler } from "../textSlice";
+//TODO userResult reducer
 import "./Sentiment.scss";
 import "../../../src/App.scss";
+
+import React, { useSelector, useDispatch } from "react-redux";
+import { nextHandler } from "./actions";
+import { useState } from "react";
+
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
 function Sentiment() {
-  const myArray = useSelector((state) => state.textReducer.text);
-  const step = useSelector((state) => state.textReducer.step);
-  console.log(step);
-  console.log(myArray);
+  const inputArray = useSelector((state) => state.myReducer.users);
+  const step = useSelector((state) => state.myReducer.step);
+  console.log("step", step);
+  console.log("myarray", inputArray);
   const dispatch = useDispatch();
+
+  const [finalState, setFinalState] = useState({});
+
+  const userHandler = (value) => {
+    dispatch(nextHandler());
+    const userInput = { ...inputArray[step], userValue: value };
+    setFinalState({ userInput });
+  };
+  console.log("final array", finalState);
 
   return (
     <div className="App">
@@ -20,23 +33,19 @@ function Sentiment() {
           <p className="question">
             what kind of emotion is expressed in the text below?
           </p>
-          <p className="answer">{myArray[step].text}</p>
+          <p className="answer">{inputArray[step].title}</p>
         </div>
         <div className="rating">
-          <button
-            id="sad"
-            value="sad"
-            onClick={() => dispatch(emotionHandler("sad"))}
-          ></button>
+          <button id="sad" value="sad" onClick={() => userHandler(1)}></button>
           <button
             id="poker"
             value="poker"
-            onClick={() => dispatch(emotionHandler("poker"))}
+            onClick={() => userHandler(2)}
           ></button>
           <button
             id="happy"
             value="happy"
-            onClick={() => dispatch(emotionHandler("happy"))}
+            onClick={() => userHandler(3)}
           ></button>
         </div>
       </div>
@@ -46,9 +55,3 @@ function Sentiment() {
 }
 
 export default Sentiment;
-
-// const myRef = useRef(DUMMY_ARRAY);
-// const happyHandler = () => {
-//   myRef.current[0].userValue = "happy";
-// };
-// const sadHandler = (prevState) => setState({ text: "hi", userValue: "sad" });
