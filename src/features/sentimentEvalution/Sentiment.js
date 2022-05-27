@@ -6,6 +6,7 @@ import { getUsersFetch, userHandler } from "./actions";
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { useEffect } from "react";
 
 function Sentiment() {
   const dispatch = useDispatch();
@@ -18,12 +19,13 @@ function Sentiment() {
   console.log("myarray", inputArray);
   console.log("final array", result);
 
+  useEffect(() => {
+    dispatch(getUsersFetch());
+  }, []);
+
   return (
     <>
-      {data.length === 0 && (
-        <button onClick={() => dispatch(getUsersFetch())}> get data</button>
-      )}
-
+      {data.length === 0 && <p> please wait </p>}
       {data.length !== 0 && (
         <div className="App">
           <Header />
