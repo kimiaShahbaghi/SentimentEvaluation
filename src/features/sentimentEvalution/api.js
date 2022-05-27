@@ -35,7 +35,3 @@ export const fetchUsers = () => {
     response.json()
   );
 };
-
-// export const fetchUsers = () => {
-//   return fetch(apiState);
-// };

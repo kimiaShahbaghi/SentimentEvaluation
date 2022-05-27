@@ -1,15 +1,36 @@
-import { GET_USERS_SUCCESS, NEXT_HANDLER, PREVIOUS_HANDLER } from "./actions";
-const myReducer = (state = { users: [], step: 0 }, action) => {
+const sentimentReducer = (
+  state = {
+    users: [],
+    step: 0,
+    result: [],
+  },
+  action
+) => {
   switch (action.type) {
-    case GET_USERS_SUCCESS:
+    case "GET_USERS_SUCCESS":
       return { ...state, users: action.users };
-    case NEXT_HANDLER:
-      return { ...state, step: ++state.step };
-    case PREVIOUS_HANDLER:
-      return { ...state, step: --state.step };
+
+    case "PREVIOUS_HANDLER":
+      return {
+        ...state,
+        step: --state.step,
+        result: state.result.concat({
+          input: state.users[state.step],
+          userValue: -1,
+        }),
+      };
+    case "USER_HANDLER":
+      return {
+        ...state,
+        step: ++state.step,
+        result: state.result.concat({
+          input: state.users[state.step],
+          userValue: action.payload,
+        }),
+      };
     default:
       return state;
   }
 };
 
-export default myReducer;
+export default sentimentReducer;
