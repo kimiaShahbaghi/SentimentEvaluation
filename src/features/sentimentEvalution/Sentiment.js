@@ -2,21 +2,21 @@ import "./Sentiment.scss";
 import "../../../src/App.scss";
 
 import React, { useSelector, useDispatch } from "react-redux";
-import { getUsersFetch, userHandler } from "./actions";
+import { getUsersFetch, sentimentHandler } from "./actions";
 
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import Header from "../common/Header";
+import Footer from "../common/Footer";
 import { useEffect } from "react";
 
 function Sentiment() {
   const dispatch = useDispatch();
-  const inputArray = useSelector((state) => state.sentimentReducer.users);
+  // const inputArray = useSelector((state) => state.sentimentReducer.inputs);
   const step = useSelector((state) => state.sentimentReducer.step);
-  const data = useSelector((state) => state.sentimentReducer.users);
+  const data = useSelector((state) => state.sentimentReducer.inputs);
   const result = useSelector((state) => state.sentimentReducer.result);
 
   console.log("step", step);
-  console.log("myarray", inputArray);
+  console.log("myarray", data);
   console.log("final array", result);
 
   useEffect(() => {
@@ -34,20 +34,20 @@ function Sentiment() {
               <p className="question">
                 what kind of emotion is expressed in the text below?
               </p>
-              <p className="answer">{inputArray[step].title}</p>
+              <p className="answer">{data[step].title}</p>
             </div>
             <div className="rating">
               <button
                 id="sad"
-                onClick={() => dispatch(userHandler(1))}
+                onClick={() => dispatch(sentimentHandler(1))}
               ></button>
               <button
                 id="poker"
-                onClick={() => dispatch(userHandler(2))}
+                onClick={() => dispatch(sentimentHandler(2))}
               ></button>
               <button
                 id="happy"
-                onClick={() => dispatch(userHandler(3))}
+                onClick={() => dispatch(sentimentHandler(3))}
               ></button>
             </div>
           </div>

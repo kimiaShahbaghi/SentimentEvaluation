@@ -1,13 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  userHandler,
+  sentimentHandler,
   previousHandler,
-} from "../features/sentimentEvalution/actions";
+} from "../sentimentEvalution/actions";
 import "./Footer.scss";
 
-import RightFlag from "../assest/right.png";
-import LeftFlag from "../assest/left.png";
+import RightFlag from "../../assest/right.png";
+import LeftFlag from "../../assest/left.png";
 
 function Footer() {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ function Footer() {
         <span>Previous</span>
         <img src={LeftFlag} alt="leftFlag" />
       </button>
-      <button onClick={() => dispatch(userHandler(0))}>
+      <button onClick={() => dispatch(sentimentHandler(0))}>
         <span>Skip</span>
         <img src={RightFlag} alt="rightFlag" />
       </button>
