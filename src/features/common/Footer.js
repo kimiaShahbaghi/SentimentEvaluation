@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   sentimentHandler,
   previousHandler,
-} from "../sentimentEvalution/actions";
+} from "../sentimentEvalution/sentimentSlice";
 import "./Footer.scss";
 
 import RightFlag from "../../assest/right.png";

@@ -2,22 +2,16 @@ import "./Sentiment.scss";
 import "../../../src/App.scss";
 
 import React, { useSelector, useDispatch } from "react-redux";
-import { getUsersFetch, sentimentHandler } from "./actions";
-
 import Header from "../common/Header";
 import Footer from "../common/Footer";
+import { getUsersFetch } from "./actions";
+import { sentimentHandler } from "./sentimentSlice";
 import { useEffect } from "react";
 
 function Sentiment() {
   const dispatch = useDispatch();
-  // const inputArray = useSelector((state) => state.sentimentReducer.inputs);
   const step = useSelector((state) => state.sentimentReducer.step);
   const data = useSelector((state) => state.sentimentReducer.inputs);
-  const result = useSelector((state) => state.sentimentReducer.result);
-
-  console.log("step", step);
-  console.log("myarray", data);
-  console.log("final array", result);
 
   useEffect(() => {
     dispatch(getUsersFetch());
