@@ -1,9 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  sentimentHandler,
-  previousHandler,
-} from "../sentimentEvalution/sentimentSlice";
+import { postData } from "../sentimentEvalution/actions";
+import { sentimentHandler } from "../sentimentEvalution/sentimentSlice";
 import "./Footer.scss";
 
 import RightFlag from "../../assest/right.png";
@@ -15,11 +13,22 @@ function Footer() {
 
   return (
     <div className="footer">
-      <button onClick={() => dispatch(previousHandler())} disabled={!step}>
+      <button
+        onClick={() => {
+          dispatch(sentimentHandler(-1));
+          dispatch(postData());
+        }}
+        disabled={!step}
+      >
         <span>Previous</span>
         <img src={LeftFlag} alt="leftFlag" />
       </button>
-      <button onClick={() => dispatch(sentimentHandler(0))}>
+      <button
+        onClick={() => {
+          dispatch(sentimentHandler(0));
+          dispatch(postData());
+        }}
+      >
         <span>Skip</span>
         <img src={RightFlag} alt="rightFlag" />
       </button>

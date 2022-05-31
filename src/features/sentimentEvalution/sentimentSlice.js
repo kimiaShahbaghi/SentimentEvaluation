@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   input: [],
-  step: 0,
   result: [],
   isLoading: false,
 };
@@ -11,34 +10,33 @@ const sentimentSlice = createSlice({
   reducers: {
     getDataFetch: (state, action) => {
       state.input = action.payload;
+      state.isLoading = false;
     },
     sentimentHandler: (state, action) => {
-      state.step++;
       state.result = {
         input: state.input,
         userValue: action.payload,
       };
       state.input = [];
+      state.isLoading = true;
     },
-    previousHandler: (state, action) => {
-      state.step--;
-      state.result = state.result.concat({
-        input: state.input,
-        userValue: action.payload,
-      });
-      state.input = [];
+
+    postDataFetch: (state, action) => {
+      state.isLoading = action.payload;
+
+      state.result = [];
     },
-    // setIsLoading: (state, action) => {
-    //   state.isLoading = action.payload;
-    // },
   },
 });
 
-// export const { result } = initialState.result;
+export const result = (state) => state.sentimentReducer.result;
+export const Loading = (state) => state.sentimentReducer.isLoading;
+export const stateData = (state) => state.sentimentReducer.input;
+
 export const {
   previousHandler,
   sentimentHandler,
   getDataFetch,
-  getRandomInput,
+  postDataFetch,
 } = sentimentSlice.actions;
 export default sentimentSlice.reducer;

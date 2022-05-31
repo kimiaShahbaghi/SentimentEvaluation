@@ -1,37 +1,34 @@
 import "./Sentiment.scss";
 import "../../../src/App.scss";
-import React, { useRef } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
-import { getUsersFetch, getInputRandom } from "./actions";
+import { getUsersFetch, postData } from "./actions";
 import { sentimentHandler } from "./sentimentSlice";
 import { useEffect } from "react";
+import { result, Loading, stateData } from "./sentimentSlice";
 
 function Sentiment() {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.sentimentReducer.input);
-  const result = useSelector((state) => state.sentimentReducer.result);
-  const step = useSelector((state) => state.sentimentReducer.step);
-
-  console.log("from sentiment random input:", data);
-
-  let isLoading = true;
+  const data = useSelector(stateData);
+  const finalResult = useSelector(result);
+  const isLoading = useSelector(Loading);
 
   useEffect(() => {
-    dispatch(getUsersFetch());
-  }, [step]);
+    if (!isLoading) {
+      dispatch(getUsersFetch());
+    }
+  }, [isLoading]);
 
-  // useEffect(() => {
-  //   dispatch(getUsersFetch());
-  // }, [step]);
-
+  console.log("isLoading", isLoading);
   console.log("input array", data);
-  console.log("result", result);
+  console.log("result", finalResult);
+
   return (
     <>
-      {data.length === 0 && <p> please wait </p>}
-      {data.length !== 0 && (
+      {isLoading && <p> please wait </p>}
+      {!isLoading && (
         <div className="App">
           <Header />
           <div className="sentiment">
@@ -44,15 +41,24 @@ function Sentiment() {
             <div className="rating">
               <button
                 id="sad"
-                onClick={() => dispatch(sentimentHandler(1))}
+                onClick={() => {
+                  dispatch(postData());
+                  dispatch(sentimentHandler(1));
+                }}
               ></button>
               <button
                 id="poker"
-                onClick={() => dispatch(sentimentHandler(2))}
+                onClick={() => {
+                  dispatch(postData());
+                  dispatch(sentimentHandler(2));
+                }}
               ></button>
               <button
                 id="happy"
-                onClick={() => dispatch(sentimentHandler(3))}
+                onClick={() => {
+                  dispatch(postData());
+                  dispatch(sentimentHandler(3));
+                }}
               ></button>
             </div>
           </div>
