@@ -1,42 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  input: [],
-  result: [],
+  question: {},
   isLoading: false,
 };
 const sentimentSlice = createSlice({
   name: "sentiment",
   initialState,
   reducers: {
-    getDataFetch: (state, action) => {
-      state.input = action.payload;
-      state.isLoading = false;
-    },
-    sentimentHandler: (state, action) => {
-      state.result = {
-        input: state.input,
-        userValue: action.payload,
-      };
-      state.input = [];
-      state.isLoading = true;
+    setQuestion: (state, action) => {
+      state.question = action.payload;
     },
 
-    postDataFetch: (state, action) => {
+    setLoading: (state, action) => {
       state.isLoading = action.payload;
-
-      state.result = [];
+    },
+    clearQuestion: (state) => {
+      state.question = {};
     },
   },
 });
 
-export const result = (state) => state.sentimentReducer.result;
-export const Loading = (state) => state.sentimentReducer.isLoading;
-export const stateData = (state) => state.sentimentReducer.input;
+export const selectLoading = (state) => state.sentimentReducer.isLoading;
+export const selectQuestion = (state) => state.sentimentReducer.question;
 
 export const {
   previousHandler,
   sentimentHandler,
-  getDataFetch,
-  postDataFetch,
+  setQuestion,
+  setLoading,
+  clearQuestion,
 } = sentimentSlice.actions;
+
 export default sentimentSlice.reducer;

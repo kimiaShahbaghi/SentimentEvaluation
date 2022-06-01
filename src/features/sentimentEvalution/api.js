@@ -1,19 +1,14 @@
 import axios from "axios";
-import { result } from "./sentimentSlice";
+import request from "../../helper/requestConfig";
 
 export const fetchUsers = async () => {
   const resp = await axios.get("https://jsonplaceholder.typicode.com/albums");
   const randomResp = resp.data[Math.floor(Math.random() * resp.data.length)];
-
-  return randomResp;
+  const outPut = { random: randomResp, status: resp.status };
+  //console.log("get response", outPut);
+  return outPut;
 };
 
-export const PostUserData = async () => {
-  const response = await axios.post(
-    "https://react-http-8ae62-default-rtdb.firebaseio.com/user.json",
-    { result }
-  );
-
-  console.log("post response from api ", response.status);
-  return response.status;
+export const PostUserData = async (data, userId) => {
+  return await request.post("/user.json", { ...data, userId });
 };

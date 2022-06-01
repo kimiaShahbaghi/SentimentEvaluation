@@ -5,15 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import { getUsersFetch, postData } from "./actions";
-import { sentimentHandler } from "./sentimentSlice";
 import { useEffect } from "react";
-import { result, Loading, stateData } from "./sentimentSlice";
+import { selectLoading, selectQuestion } from "./sentimentSlice";
 
 function Sentiment() {
   const dispatch = useDispatch();
-  const data = useSelector(stateData);
-  const finalResult = useSelector(result);
-  const isLoading = useSelector(Loading);
+
+  const question = useSelector(selectQuestion);
+  const isLoading = useSelector(selectLoading);
 
   useEffect(() => {
     if (!isLoading) {
@@ -22,8 +21,14 @@ function Sentiment() {
   }, [isLoading]);
 
   console.log("isLoading", isLoading);
-  console.log("input array", data);
-  console.log("result", finalResult);
+  console.log("input array", question);
+
+  const getSendData = (sentiment) => {
+    return {
+      questionId: question.id,
+      sentiment: sentiment,
+    };
+  };
 
   return (
     <>
@@ -36,28 +41,25 @@ function Sentiment() {
               <p className="question">
                 what kind of emotion is expressed in the text below?
               </p>
-              <p className="answer">{data.title}</p>
+              <p className="answer">{question.title}</p>
             </div>
             <div className="rating">
               <button
                 id="sad"
                 onClick={() => {
-                  dispatch(postData());
-                  dispatch(sentimentHandler(1));
+                  dispatch(postData(getSendData(1)));
                 }}
               ></button>
               <button
                 id="poker"
                 onClick={() => {
-                  dispatch(postData());
-                  dispatch(sentimentHandler(2));
+                  dispatch(postData(getSendData(2)));
                 }}
               ></button>
               <button
                 id="happy"
                 onClick={() => {
-                  dispatch(postData());
-                  dispatch(sentimentHandler(3));
+                  dispatch(postData(getSendData(3)));
                 }}
               ></button>
             </div>

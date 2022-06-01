@@ -1,27 +1,32 @@
 //#TODO handle dispatch order
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { fetchUsers, PostUserData } from "./api";
-import { getDataFetch, postDataFetch } from "./sentimentSlice";
+import { setQuestion, setLoading, clearQuestion } from "./sentimentSlice";
 import { GET_USERS_FETCH, POST_DATA } from "./actions";
 
 function* GetUsersFetch() {
-  const inputs = yield call(fetchUsers);
-  yield put(getDataFetch(inputs));
+  const response = yield call(fetchUsers);
+  yield put(setQuestion(response.random));
+  yield put(setLoading(false));
 }
 
-function* postUsersFetch() {
-  const inputs = yield call(PostUserData);
+function* postUsersFetch(action) {
+  //#FIXME: this should be get from userSelector
+  const userId = 0;
+  const data = action.payload;
+  yield put(setLoading(true));
+  const response = yield call(PostUserData, data, userId);
 
-  if (inputs === 200) {
-    yield put(postDataFetch(false));
-    console.log("success");
+  if (response.status === 200) {
+    yield put(clearQuestion());
+    yield put(setLoading(false));
   } else {
-    yield put(postDataFetch(true));
+    yield put(setLoading(true));
   }
 }
 
 function* mySaga() {
-  yield takeLatest(POST_DATA, postUsersFetch);
+  yield takeEvery(POST_DATA, postUsersFetch);
   yield takeEvery(GET_USERS_FETCH, GetUsersFetch);
 }
 
